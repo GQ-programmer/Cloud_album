@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pub.zgq.CloudAlbum.dao.UserDao">
+    <resultMap id="userMap" type="pub.zgq.CloudAlbum.pojo.User">
+        <result property="username" column="username"/>
+        <result property="nickname" column="nickname"/>
+        <result property="password" column="password"/>
+        <result property="status" column="status"/>
+    </resultMap>
+    <select id="findUser" parameterType="user" resultMap="userMap">
+        select * from tab_user where username = #{username} and password = #{password}
+    </select>
+
+    <select id="findUserByUsername" parameterType="string" resultType="user">
+        select * from tab_user where username = #{username}
+    </select>
+
+    <insert id="save" parameterType="user">
+        insert into tab_user(username,nickname,password,status) values(#{username},#{nickname},#{password},#{status})
+    </insert>
+
+    <insert id="saveImg" parameterType="image">
+        insert into tab_img(imgName,fileName,time,albumName,size) values (#{imgName},#{fileName},#{time},#{albumName},#{size})
+    </insert>
+
+    <select id="findImages" parameterType="string" resultType="image">
+        select * from tab_img where albumName = #{albumName}
+    </select>
+
+    <select id="findImageOne" parameterType="int" resultType="image">
+        select * from tab_img where imgId = #{imgId}
+    </select>
+
+    <select id="findImgByImgName" parameterType="string" resultType="image">
+        select * from tab_img where imgName like '%${value}%'
+    </select>
+</mapper>

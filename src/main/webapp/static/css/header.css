@@ -1,0 +1,38 @@
+#img_header {
+    margin-top: 5px;
+    width:52px;
+    -webkit-user-drag: none;
+}
+#span_header{
+    /*border: #2aabd2 solid;*/
+    margin-left: 15px;
+    margin-top: 13px;
+    font-size: 18px;
+}
+.btn_header{
+    margin-top: 8px;
+    width: 60px;
+}
+#upload{
+    /*margin-left: 15px;*/
+    margin-top: 0px;
+    background-color:#1890ff;
+    color: white ;
+}
+.upload_div{
+    padding-top: 0px;
+
+    /*border: red solid;*/
+    width: 82px;
+    height: 38px;
+    margin-top: 10px;
+    margin-left: 50px;
+}
+.user_div{
+    text-align: center;
+    width: 150px;
+    height: 38px;
+    margin-top: 14px;
+    margin-left: 80px;
+    /*border: red 3px solid;*/
+}

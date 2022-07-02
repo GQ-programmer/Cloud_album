@@ -1,0 +1,131 @@
+<link th:href="@{/static/css/header.css}" rel="stylesheet">
+
+<script type="text/javascript">
+  $(function () {
+
+    //变量表示是否是登录状态
+    var dataFlag = false;
+    var dataStatus;
+    //查询用户数据
+    $.post("selectUser",{},function (data) {
+      dataStatus = data.user.status;
+      if (data.flag){
+        $("#span_username").html("user:&nbsp;&nbsp;"+data.user.nickname);
+        dataFlag = true;
+      }
+      //  user:&nbsp;&nbsp;张高强
+    })
+    //退出按钮
+    $("#exit").click(function () {
+      if (dataFlag){
+        var r = confirm("您确定退出登录吗？");
+        if (r == true) {
+          location.href = "exitUser";
+        }
+      }else {
+        alert("您尚未登陆！")
+      }
+
+    });
+    //获取搜索框中信息
+    $("#search_btn").click(function () {
+      if (dataFlag) {
+        var imgName = $("#search_input").val();
+        if (imgName == null || imgName == undefined || imgName == "") {
+          alert("请输入图片名称！");
+        } else {
+          location.href = 'search_img?imgName=' + imgName + '';
+        }
+      }else{
+        alert("请先登录！")
+      }
+    });
+    // 注册按钮点击事件
+    $("#register").click(function (){
+      location.href = "register"
+    });
+    //登录按钮点击时间
+    $("#login").click(function (){
+      //先判断是否已经登录
+      if (dataFlag){
+        alert("您已登录！");
+      }else{
+        location.href = "login";
+      }
+    });
+    //上传文件
+    $("#upload").click(function (){
+      if (dataFlag){
+        if (dataStatus == 'N'){
+          alert("您尚无权限，请联系管理员！")
+        }else{
+          location.href = "upload"
+        }
+      }else {
+        alert("请先登录！")
+      }
+    });
+    // 禁用回车键
+    $(document).on("keypress", "form", function(event) {
+        return event.keyCode != 13;
+    });
+
+  });
+</script>
+
+<div id="header">
+
+  <nav class="navbar navbar-default navbar-fixed-top"> <!--navbar-fixed-top类属性 可以固定在顶部-->
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a href="#"><img id="img_header"  alt="Brand" th:src="@{/static/img/icon.png}"></a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li id="span_header">云相册</li>
+          <li><a href="#"></a></li>
+          <li id="index"><a th:href="@{/index}">首页<span class="sr-only">(current)</span></a></li><!-- class="active"状态-->
+          <li id="kaifeng"><a th:href="@{/img_list?albumName=2}">开封之旅<span class="sr-only">(current)</span></a></li>
+          <li id="gaungdong"><a th:href="@{/img_list?albumName=3}">广东之行<span class="sr-only">(current)</span></a></li>
+          <li id="jun"><a th:href="@{/img_list?albumName=4}">老君山<span class="sr-only">(current)</span></a></li>
+          <li id="yun"><a th:href="@{/img_list?albumName=5}">云台山</a></li>
+          <li><a id="other" th:href="@{/img_list?albumName=6}">其它</a></li>
+        </ul>
+
+        <form class="navbar-form navbar-left" id="search_form" style="margin-left: 40px;margin-top: 9px">
+          <div class="form-group">
+            <input id="search_input" class="form-control" placeholder="请输入图片名称" name="imgName">
+          </div>
+          <button id="search_btn" style="background-color:#1890ff;color: white;width: 50px " type="button" class="btn btn-default glyphicon glyphicon-search"></button>
+        </form>
+
+        <ul class="nav navbar-nav">
+          <div class="upload_div">
+            <button id="upload" type="button" class="btn btn-default glyphicon glyphicon-cloud-upload"></button>
+            <span>上传</span>
+          </div>
+        </ul>
+        <ul class="nav navbar-nav">
+          <div class="user_div" >
+            <span id="span_username"></span>
+          </div>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" style="padding-right: 30px" id="btn_list">
+          <button  type="button" class="btn btn-default btn_header" id="register">注册</button>
+          <button style="background-color: #1890ff;color: white" type="button" class="btn btn-default btn_header" id="login">登录</button>
+          <button style="background-color: #b0b1b0;color: white" type="button" class="btn btn-default btn_header" id="exit">退出</button>
+
+        </ul>
+
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
+</div>
